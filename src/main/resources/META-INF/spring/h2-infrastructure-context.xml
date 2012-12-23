@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<bean id="h2InfrastructureService" class="de.incompleteco.spring.infrastructure.service.H2InfrastructureService"/>
+
+	<bean id="dataSource" class="org.h2.jdbcx.JdbcDataSource">
+		<property name="URL" value="jdbc:h2:tcp://localhost/~/test"/>
+		<property name="user" value="sa"/>
+	</bean>
+	
+	<jdbc:initialize-database enabled="false" ignore-failures="DROPS">
+		<jdbc:script location="classpath:/META-INF/sql/drop-test-schema-h2.sql"/>
+		<jdbc:script location="classpath:/META-INF/sql/test-schema-h2.sql"/>
+	</jdbc:initialize-database>
+	
 </beans>
