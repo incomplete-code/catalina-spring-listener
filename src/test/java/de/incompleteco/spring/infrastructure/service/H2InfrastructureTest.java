@@ -11,8 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/META-INF/spring/infrastructure-context.xml")
-public class H2InfrastructureServiceTest {
+@ContextConfiguration({"classpath:/META-INF/spring/infrastructure-context.xml"})
+public class H2InfrastructureTest {
 
 	@Autowired
 	private InfrastructureService service;
@@ -20,9 +20,11 @@ public class H2InfrastructureServiceTest {
 	@Test
 	public void test() throws Exception {
 		service.start();
-		//see if the database is running
+		//check
 		Class.forName("org.h2.Driver");
 		assertTrue(DriverManager.getConnection("jdbc:h2:tcp://localhost/~/test","sa","").isValid(1000));
+		//stop the service
+		service.stop();
 	}
 
 }
