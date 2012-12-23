@@ -1,0 +1,22 @@
+###
+# README - catalina spring listener
+#
+###
+
+this project is to create a hook between Tomcat and Spring to allow the startup and shutdown of
+infrastructure resources inside a Tomcat container.  
+
+THIS SHOULD ONLY BE USED TO SUPPORT TESTING
+
+scenario: i want to deploy two WARs to a comtact container for testing purposes.  these apps share
+a JMS infrastructure.
+
+ActiveMQ VM connectors don't work due to the following;
+- startup order
+- application assumes responsibility for establishing infrastructure and most be removed during prod
+- establishment of configuration can be a 'challenge' and subject to order
+
+solution: add a startup hook in tomcat to establish shared infrastructure such as;
+- JMS provider (AMQ)
+- Database provider (SQL)
+- cache infrastructure (GemFire)
