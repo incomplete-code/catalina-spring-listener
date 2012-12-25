@@ -13,8 +13,8 @@
 	</bean>
 	
 	<jdbc:initialize-database enabled="false" ignore-failures="DROPS">
-		<jdbc:script location="classpath:/META-INF/sql/drop-test-schema-h2.sql"/>
-		<jdbc:script location="classpath:/META-INF/sql/test-schema-h2.sql"/>
+		<jdbc:script location="file:#{systemProperties['catalina.home']}/conf/sql/drop-test-schema-h2.sql"/>
+		<jdbc:script location="file:#{systemProperties['catalina.home']}/conf/sql/test-schema-h2.sql"/>
 	</jdbc:initialize-database>
 	
 </beans>

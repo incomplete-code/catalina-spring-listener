@@ -1,5 +1,7 @@
 package de.incompleteco.spring.infrastructure.tomcat;
 
+import java.io.File;
+
 import org.apache.catalina.Lifecycle;
 import org.apache.catalina.LifecycleEvent;
 import org.apache.catalina.LifecycleListener;
@@ -15,7 +17,9 @@ import de.incompleteco.spring.infrastructure.service.InfrastructureService;
  */
 public class ContainerInfrastructureListener implements LifecycleListener {
 
-	private static final String DEFAULT_CONTEXT = "classpath:/META-INF/spring/infrastructure-context.xml";
+	private static final String CATALINA_HOME = "catalina.home";
+	
+	private static final String DEFAULT_CONTEXT = "infrastructure-context.xml";
 	
 	private static ConfigurableApplicationContext context;
 	
@@ -36,7 +40,9 @@ public class ContainerInfrastructureListener implements LifecycleListener {
 	}
 
 	protected void initApplicationContext() {
-		context = new ClassPathXmlApplicationContext(DEFAULT_CONTEXT);
+		//get the classpath
+		String location = "file:" + System.getProperty(CATALINA_HOME) + File.separator + "conf" + File.separator;
+		context = new ClassPathXmlApplicationContext(location + DEFAULT_CONTEXT);
 		//set details
 		context.registerShutdownHook();//JVM hook just in case
 		//start it
